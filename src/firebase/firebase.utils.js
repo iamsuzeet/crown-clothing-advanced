@@ -30,6 +30,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
+
     const createdAt = new Date();
 
     try {
@@ -99,6 +100,15 @@ export const convertCollectionsSnapshopToMap = collections => {
   //   });
   //   console.log(item);
   // });
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
 };
 
 //for auth and firestore access
